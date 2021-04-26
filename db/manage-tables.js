@@ -1,12 +1,12 @@
-const db = require('./connection');
+const db = require("./connection");
 
-const createTables = () => {
+exports.createTables = () => {
   return db
     .query(
       `CREATE TABLE categories (
-     slug VARCHAR PRIMARY KEY,
-     description VARCHAR NOT NULL
-    );`
+        slug VARCHAR PRIMARY KEY,
+        description VARCHAR NOT NULL
+    );`,
     )
     .then(() => {
       return db.query(`CREATE TABLE users (
@@ -40,4 +40,26 @@ const createTables = () => {
     });
 };
 
-createTables();
+exports.dropTables = () => {
+  return db
+    .query(
+      `
+    DROP TABLE IF EXISTS comments;
+    `,
+    )
+    .then(() => {
+      return db.query(`
+    DROP TABLE IF EXISTS reviews;
+    `);
+    })
+    .then(() => {
+      return db.query(`
+    DROP TABLE IF EXISTS users;
+    `);
+    })
+    .then(() => {
+      return db.query(`
+    DROP TABLE IF EXISTS categories;
+    `);
+    });
+};
