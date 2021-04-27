@@ -5,13 +5,13 @@
 // func to convert unix timestamp to readble SQL format
 
 exports.unixToSQLDateFormat = (unixTS) => {
-  //   new Date(unixTS).toISOString().slice(0, 19).replace("T", " ");
-  const dateObject = new Date(unixTS);
-  const humanDateFormat = dateObject
-    .toISOString()
-    .slice(0, 19)
-    .replace("T", " ");
-  return humanDateFormat;
+  // const dateObject = new Date(unixTS);
+  // const humanDateFormat = dateObject
+  //   .toISOString()
+  //   .slice(0, 19)
+  //   .replace("T", " ");
+  // return humanDateFormat;
+  return new Date(unixTS);
 };
 
 exports.filterResults = (reviews, comments) => {

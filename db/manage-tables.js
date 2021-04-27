@@ -1,4 +1,4 @@
-const db = require("./connection");
+const db = require('./connection');
 
 exports.createTables = () => {
   return db
@@ -6,7 +6,7 @@ exports.createTables = () => {
       `CREATE TABLE categories (
         slug VARCHAR PRIMARY KEY,
         description VARCHAR NOT NULL
-    );`,
+    );`
     )
     .then(() => {
       return db.query(`CREATE TABLE users (
@@ -25,7 +25,7 @@ exports.createTables = () => {
           votes INT DEFAULT 0,
           category VARCHAR REFERENCES categories(slug) NOT NULL,
           owner VARCHAR REFERENCES users(username) NOT NULL,
-          created_at DATE DEFAULT now()
+          created_at TIMESTAMP DEFAULT now()
       );`);
     })
     .then(() => {
@@ -34,7 +34,7 @@ exports.createTables = () => {
           author VARCHAR REFERENCES users(username) NOT NULL,
           review_id INT REFERENCES reviews(review_id),
           votes INT DEFAULT 0,
-          created_at DATE DEFAULT now(),
+          created_at TIMESTAMP DEFAULT now(),
           body VARCHAR NOT NULL
       );`);
     });
@@ -45,7 +45,7 @@ exports.dropTables = () => {
     .query(
       `
     DROP TABLE IF EXISTS comments;
-    `,
+    `
     )
     .then(() => {
       return db.query(`
