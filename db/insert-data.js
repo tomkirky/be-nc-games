@@ -1,9 +1,9 @@
-const format = require("pg-format");
-const db = require("../db/connection.js");
+const format = require('pg-format');
+const db = require('../db/connection.js');
 const {
   unixToSQLDateFormat,
   filterResults,
-} = require("./utils/data-manipulation.js");
+} = require('./utils/data-manipulation.js');
 
 const insertCategoriesData = (categoriesData) => {
   const categoriesDataArray = categoriesData.map((category) => {
@@ -18,7 +18,7 @@ const insertCategoriesData = (categoriesData) => {
         %L
         RETURNING *;
     `,
-    categoriesDataArray,
+    categoriesDataArray
   );
 
   return db.query(categoriesInsertQuery);
@@ -36,7 +36,7 @@ const insertUsersData = (usersData) => {
         %L
         RETURNING *;
     `,
-    usersDataArray,
+    usersDataArray
   );
   return db.query(usersInsertQuery);
 };
@@ -63,7 +63,7 @@ const insertReviewsAndCommentsData = (reviewsData, commentsData) => {
             %L
             RETURNING *;
     `,
-    reviewsDataArray,
+    reviewsDataArray
   );
   return db.query(reviewsInsertQuery).then((reviews) => {
     const combinedResults = filterResults(reviews.rows, commentsData);
@@ -84,16 +84,18 @@ const insertReviewsAndCommentsData = (reviewsData, commentsData) => {
           %L
           RETURNING *;
       `,
-      commentDataArray,
+      commentDataArray
     );
     return db.query(commentsInsertQuery);
   });
 };
 
 exports.insertData = (categoriesData, usersData, reviewsData, commentsData) => {
-  insertCategoriesData(categoriesData).then(() => {
-    insertUsersData(usersData).then(() => {
-      insertReviewsAndCommentsData(reviewsData, commentsData);
+  return insertCategoriesData(categoriesData)
+    .then(() => {
+      return insertUsersData(usersData);
+    })
+    .then(() => {
+      return insertReviewsAndCommentsData(reviewsData, commentsData);
     });
-  });
 };

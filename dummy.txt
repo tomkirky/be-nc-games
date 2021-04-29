@@ -1,0 +1,5 @@
+You are now connected to database "nc_games_test" as user "tom".
+ review_id | title | review_body | designer | review_img_url | votes | category | owner | created_at | comment_count 
+-----------+-------+-------------+----------+----------------+-------+----------+-------+------------+---------------
+(0 rows)
+
