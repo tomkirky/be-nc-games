@@ -58,8 +58,16 @@ describe('GET /api/reviews/:review_id', () => {
       .get('/api/reviews/2')
       .expect(200)
       .then(({ body }) => {
-        const review = body.reviewsById[0];
+        const review = body.reviewById;
         expect(review).toEqual(expectedResponse);
+      });
+  });
+  test('status: 404 responds with custom error when review is not found', () => {
+    return request(app)
+      .get('/api/reviews/2000')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Sorry, this review does not exist');
       });
   });
 });

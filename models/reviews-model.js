@@ -9,9 +9,15 @@ exports.getEachReview = (review_id) => {
       [review_id]
     )
     .then((review) => {
-      console.log(review.rows[0]);
-      review.rows[0].comment_count = parseInt(review.rows[0].comment_count);
-      return review.rows;
+      const reviewObj = review.rows[0];
+      if (!reviewObj) {
+        return Promise.reject({
+          status: 404,
+          msg: 'Sorry, this review does not exist',
+        });
+      }
+      reviewObj.comment_count = parseInt(reviewObj.comment_count);
+      return reviewObj;
     });
 };
 

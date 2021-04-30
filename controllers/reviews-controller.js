@@ -3,8 +3,8 @@ const { getEachReview, patchReviews } = require('../models/reviews-model');
 exports.getReviewsById = (req, res, next) => {
   const { review_id } = req.params;
   getEachReview(review_id)
-    .then((reviewsById) => {
-      res.status(200).send({ reviewsById });
+    .then((reviewById) => {
+      res.status(200).send({ reviewById });
     })
     .catch(next);
 };
