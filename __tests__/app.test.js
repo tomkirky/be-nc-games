@@ -58,8 +58,7 @@ describe('GET /api/reviews/:review_id', () => {
       .get('/api/reviews/2')
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
-        const review = body.review;
+        const review = body.reviewsById[0];
         expect(review).toEqual(expectedResponse);
       });
   });
