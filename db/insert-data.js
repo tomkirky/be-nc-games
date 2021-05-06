@@ -47,7 +47,9 @@ const insertReviewsAndCommentsData = (reviewsData, commentsData) => {
       review.title,
       review.review_body,
       review.designer,
-      review.review_img_url,
+      review.review_img_url
+        ? review.review_img_url
+        : 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg',
       review.votes,
       review.category,
       review.owner,
