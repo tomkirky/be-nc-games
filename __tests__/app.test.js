@@ -231,3 +231,117 @@ describe('GET/api/reviews', () => {
       });
   });
 });
+
+describe('GET/api/reviews/:review_id/comments', () => {
+  test('status: 200 responds with an array of comments objects for a specific review id', () => {
+    return request(app)
+      .get('/api/reviews/2/comments')
+      .expect(200)
+      .then(({ body }) => {
+        const { comments } = body;
+        expect(comments.length).toBe(3);
+        comments.forEach((comment) => {
+          expect(comment).toEqual(
+            expect.objectContaining({
+              comment_id: expect.any(Number),
+              votes: expect.any(Number),
+              created_at: expect.any(String),
+              author: expect.any(String),
+              body: expect.any(String),
+            })
+          );
+        });
+      });
+  });
+  test('status: 404, responds with error message not found when passed with a id that is valid but does not exist in the DB', () => {
+    return request(app)
+      .get('/api/reviews/700/comments')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Page not found');
+      });
+  });
+  test('status: 200, responds with an empty array when category exists in DB but has no Reviews', () => {
+    return request(app)
+      .get('/api/reviews/1/comments')
+      .expect(200)
+      .then(({ body }) => {
+        const { comments } = body;
+        expect(comments.length).toBe(0);
+      });
+  });
+  test('status: 400, responds with 400 bad request when review_id is of invalid datatype', () => {
+    return request(app)
+      .get('/api/reviews/this_is_not_an_id/comments')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid input');
+      });
+  });
+});
+describe('POST/api/reviews/review_id/comments', () => {
+  test('status: 201, responds with the posted comment', () => {
+    return request(app)
+      .post('/api/reviews/1/comments')
+      .send({ username: 'bainesface', body: 'Life is the best!' })
+      .expect(201)
+      .then(({ body }) => {
+        const { comment } = body;
+        expect(comment).toEqual(
+          expect.objectContaining({
+            comment_id: 7,
+            votes: 0,
+            created_at: expect.any(String),
+            author: 'bainesface',
+            body: 'Life is the best!',
+          })
+        );
+      });
+  });
+  test('status: 404, responds with error Bad Request if the username does not exist in the database', () => {
+    return request(app)
+      .post('/api/reviews/1/comments')
+      .send({
+        username: 'Incognito',
+        body: 'Master of stealth, that is me!',
+      })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Not found');
+      });
+  });
+  test('status: 400, responds with error Bad Request if username or body is undefined', () => {
+    return request(app)
+      .post('/api/reviews/1/comments')
+      .send({})
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Bad Request!');
+      });
+  });
+  test('status: 400, responds with error Bad Request if the post has additional properties other than username and body', () => {
+    return request(app)
+      .post('/api/reviews/1/comments')
+      .send({
+        username: 'bainesface',
+        body: 'Life is the best!',
+        votes: 100,
+      })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Bad Request!');
+      });
+  });
+  test('status: 404, responds with error Bad Request if the review id does not exist in the DB', () => {
+    return request(app)
+      .post('/api/reviews/999/comments')
+      .send({
+        username: 'bainesface',
+        body: 'In a world where you can be any bird, beak kind!',
+      })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Not found');
+      });
+  });
+});
