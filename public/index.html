@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <title>Northcoders House of Games API</title>
+  </head>
+  <body>
+    <header>
+      <h1>Northcoders House of Games API</h1>
+    </header>
+    <h2>Routes</h2>
+    <article>
+      <details>
+        <summary>GET /api/categories</summary>
+        <details>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              categories: [
+                {
+                  slug: String, 
+                  description: String 
+                }
+              ]
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+
+    <article>
+      <details>
+        <summary>GET /api/reviews/:review_id</summary>
+        <details>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              review: {
+                review_id: Number, 
+                title: String, 
+                owner: String, 
+                designer: String, 
+                review_body: String,
+                review_img_url: String,
+                category: String, 
+                created_at: String,
+                votes: Number, 
+                comment_count: Number
+              }
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+
+    <article>
+      <details>
+        <summary>PATCH /api/reviews/:review_id</summary>
+        <details>
+          <summary>Example Request</summary>
+          <pre>
+            { 
+              inc_votes: Number
+            }
+          </pre>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              review: {
+                review_id: Number, 
+                title: String, 
+                owner: String, 
+                designer: String, 
+                review_body: String,
+                review_img_url: String,
+                category: String, 
+                created_at: String,
+                votes: Number, 
+                comment_count: Number
+              }
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+
+    <article>
+      <details>
+        <summary>POST /api/reviews/:review_id/comments</summary>
+        <details>
+          <summary>Example Request</summary>
+          <pre>
+            { 
+              username: String, 
+              body: String 
+            }
+          </pre>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              comment: {
+                comment_id: Number, 
+                body: String,
+                author: String
+                review_id: Number,  
+                created_at: String,
+                votes: Number, 
+              }
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+
+    <article>
+      <details>
+        <summary>GET /api/reviews/:review_id/comments</summary>
+        <details>
+          <summary>Accepted Queries</summary>
+          <ul>
+            <li>sort_by (defaults to created_at)</li>
+            <li>order (defaults to desc)</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              comments: [
+              {
+                comment_id: Number, 
+                body: String,
+                author: String
+                review_id: Number,  
+                created_at: String,
+                votes: Number, 
+              }
+              ]
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+
+    <article>
+      <details>
+        <summary>GET /api/reviews</summary>
+        <details>
+          <summary>Accepted Queries</summary>
+          <ul>
+            <li>sort_by (defaults to created_at)</li>
+            <li>order (defaults to desc)</li>
+            <li>category</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Example Response</summary>
+          <pre>
+            {
+              reviews: [
+                {
+                  review_id: Number, 
+                  title: String, 
+                  owner: String, 
+                  designer: String, 
+                  review_body: String,
+                  review_img_url: String,
+                  category: String, 
+                  created_at: String,
+                  votes: Number, 
+                  comment_count: Number
+                }
+              ]
+            }
+          </pre>
+        </details>
+      </details>
+    </article>
+  </body>
+</html>
