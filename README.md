@@ -14,7 +14,7 @@ The project makes use of Javascript, Node.js, PostgreSQL and Express.js.
 
 Please ensure you have the following installed on your machine before continuing with the rest of the installation:
 
-Node.js 15.14.0 or later
+Node.js 14.17.0 or later
 NPM
 Git
 PostgreSQL
