@@ -35,7 +35,7 @@ It is required that to run this databases locally you will need to also create n
 
 ```
 Filename: .env.development    Content of file: "PGDATABASE=nc_games"
-Filename: .env.test   Content of file: "PGDATABASE=nc_games_test"
+Filename: .env.test           Content of file: "PGDATABASE=nc_games_test"
 ```
 
 Once these files have been created you can run the following commands within your terminal to create and populate the databases:
